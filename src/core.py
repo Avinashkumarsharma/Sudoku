@@ -10,11 +10,10 @@ import numpy as np
 from sklearn.externals import joblib
 from sklearn import datasets
 from sklearn.svm import LinearSVC
-from sklearn.svm import
 from skimage.feature import hog
 class Image:
     """ Contains the image for processing and basic operations on it """
-    def __init__(self, path_to_image='../data/sudoku.jpg'):
+    def __init__(self, path_to_image):
         self.img = cv2.imread(path_to_image, 0)
         self.height, self.width = self.img.shape
         self.dataset = None
@@ -23,7 +22,7 @@ class Image:
         else:
             self.channel = self.img.shape[3]
             cv2.cvtColor(self.img, self.img, cv2.COLOR_BGR2GRAY)
-        if self.height > 500:
+        if self.height > 700:
             self.resize(0.5)
             self.height *= 0.5
             self.width *= 0.5
@@ -49,12 +48,12 @@ class Image:
         self.img = cv2.resize(self.img, (0, 0), fx=ratio, fy=ratio, interpolation=cv2.INTER_AREA)
 
     def threshold(self):
-        _img = cv2.cvtColor(self.img, cv2.COLOR_GRAY2BGR)
         self.img = cv2.bilateralFilter(self.img, 11, 17, 17)
         self.img = cv2.adaptiveThreshold(self.img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                          cv2.THRESH_BINARY, 11, 5)
         _img = self.img
         self.img = cv2.Canny(self.img, 100, 255)
+        Image.display(self.img)
         (cnts, _) = cv2.findContours(self.img.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:10]
         grid = None
@@ -66,6 +65,7 @@ class Image:
                 grid = approx
                 break
         pt1 = np.float32([grid[0][0], grid[1][0], grid[2][0], grid[3][0]])
+        print pt1
         pt2 = np.float32([[0, 0], [0, self.height], [self.width, self.height], [self.width, 0]])
         M = cv2.getPerspectiveTransform(pt1, pt2)
         self.img = cv2.warpPerspective(self.img, M, (self.width, self.height))
@@ -112,13 +112,10 @@ class Image:
         print int(nbr[0])
 
 
-
-
-
 sudoku = Image('../data/sudoku_3.png')
 #sudoku.train()
-sudoku.test()
+sudoku.threshold()
 #sudoku.download_data()
 #sudoku.threshold()
-#Image.display(sudoku.img)
+Image.display(sudoku.img)
 
