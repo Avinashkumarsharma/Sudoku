@@ -31,7 +31,7 @@ class Sudoku:
     @staticmethod
     def printSudoku(mat):
         for i in range(9):
-            print mat[i*9: i*9+9]
+            print mat[i*9:i*9+9]
 
 
     def __init__(self, image):
@@ -131,10 +131,9 @@ class Sudoku:
 
 
 
-im = open('../data/sudoku_3.png',
-          'r')
+im = open('../data/sudoku_3.png', 'r')
 sudoku = Sudoku(im)
-sudoku.train()
-print sudoku.decode_sudoku()
+#sudoku.train()
+#print sudoku.decode_sudoku()
 #Sudoku.display(sudoku._extract_digit(8, 1)[6:20, 6:20])
-#print sudoku.find_digits_in_row(0)
+#print sudoku._find_digits_in_row(0)

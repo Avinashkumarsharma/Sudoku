@@ -92,3 +92,4 @@ ENV/
 # Ignore mldata
 *.pkl
 *.mat
+.idea/
