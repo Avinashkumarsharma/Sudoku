@@ -90,4 +90,5 @@ ENV/
 
 # APP Specific Excludes.
 # Ignore mldata
-data/
+*.pkl
+*.mat
