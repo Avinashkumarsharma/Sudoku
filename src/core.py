@@ -96,7 +96,7 @@ class Image:
         list_hog_fd = []
         for feature in self.features:
             fd = hog(feature.reshape((28, 28)), orientations=9, pixels_per_cell=(14, 14),
-                     cells_per_block=(1,1), visualise=False )
+                     cells_per_block=(1,1), visualise=True)
             list_hog_fd.append(fd)
         hog_feature = np.array(list_hog_fd, 'float64')
         clf = LinearSVC()
@@ -113,7 +113,7 @@ class Image:
 
 
 sudoku = Image('../data/sudoku_3.png')
-#sudoku.train()
+sudoku.train()
 sudoku.threshold()
 #sudoku.download_data()
 #sudoku.threshold()
