@@ -37,7 +37,7 @@ def try_open_file():
     im = cv2.imdecode(image, 1)
     print im.shape
     #display(im)
-try_open_file()
+#try_open_file()
 
 
 
